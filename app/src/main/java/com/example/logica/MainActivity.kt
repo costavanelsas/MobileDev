@@ -14,27 +14,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViews()
-
     }
 
     /**
-     * when the submit button is clicked, check the answer and updateUI with the texts
+     * when the submit button is clicked, check the answer and updateUI with the texts and set the
+     * answers to 0
      */
     private fun initViews() {
-        btnSubmit.setOnClickListener { checkAnswer(); updateUI() }
+        btnSubmit.setOnClickListener { checkAnswer(); updateUI(); updateCorrectAnswers() }
     }
 
     /**
      * Generate text for the incorrect/correct answers
      */
     private fun updateUI() {
-
         if (correctAnswers == 4) {
             return Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_LONG).show()
+        } else {
+            return Toast.makeText(this, getString(R.string.incorrect, correctAnswers), Toast.LENGTH_LONG).show()
         }
-        return Toast.makeText(this, getString(R.string.incorrect, correctAnswers), Toast.LENGTH_LONG).show()
+    }
+
+    /**
+     * update the correct answers to 0 after each submit
+     */
+    private fun updateCorrectAnswers(){
         correctAnswers = 0
     }
+
 
     /**
      * Check if the answer is correct, first get the answers then put them in a array
@@ -63,15 +70,5 @@ class MainActivity : AppCompatActivity() {
         if (getString(R.string.f) in answers[3]) {
             correctAnswers++
         }
-
-//        if (answer1 == getString(R.string.t)
-//            && answer2 == getString(R.string.f)
-//            && answer3 == getString(R.string.f)
-//            && answer4 == getString(R.string.f)
-//        ) {
-//            return Toast.makeText(this, getString(R.string.correct), Toast.LENGTH_LONG).show()
-//        }
-//
-//        return Toast.makeText(this, getString(R.string.incorrectToast), Toast.LENGTH_LONG).show()
     }
 }

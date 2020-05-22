@@ -4,22 +4,21 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gamebacklog.R
 import com.example.gamebacklog.model.Game
-
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+
 
 const val ADD_GAME_REQUEST_CODE = 100
 
@@ -109,14 +108,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteAllGames() {
-        mainActivityViewModel.deleteAllGames()
 
         val itemsToBeDeleted = games
         val deleteSnackBar = Snackbar.make(rvGames,
             "Successfully deleted the backlog!", Snackbar.LENGTH_LONG)
         deleteSnackBar.setAction("Undo", UndoListener(itemsToBeDeleted, mainActivityViewModel))
         deleteSnackBar.show()
+
+        mainActivityViewModel.deleteAllGames()
     }
+//WIP
+//    private fun showUndoSnackbar() {
+//        val deleteSnackBar = Snackbar.make(rvGames,
+//            "Successfully deleted the backlog!", Snackbar.LENGTH_LONG)
+//        deleteSnackBar.setAction("Undo") { undoDelete() }
+//        deleteSnackBar.show()
+//    }
+//
+//    private fun undoDelete() {
+//        games.add(
+//            RecentlyDeletedItemPosition,
+//            RecentlyDeletedItem
+//        )
+//        notifyItemInserted(mRecentlyDeletedItemPosition)
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

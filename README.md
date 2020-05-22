@@ -26,4 +26,4 @@ Level 4 - task 2 = Rockpaperscissors
 
 Level 5 - task example = level-5-task-example
 
-Level 1 - task 1 = Notepad
+Level 5 - task 1 = Notepad

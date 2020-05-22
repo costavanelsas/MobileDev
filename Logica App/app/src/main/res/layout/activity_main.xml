@@ -133,6 +133,7 @@
         android:hint="@string/hints"
         android:inputType="textCapCharacters"
         android:maxLength="1"
+        android:digits="@string/possibleValues"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -146,6 +147,7 @@
         android:hint="@string/hints"
         android:inputType="textCapCharacters"
         android:maxLength="1"
+        android:digits="@string/possibleValues"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/txtInput1" />
 
@@ -159,6 +161,7 @@
         android:hint="@string/hints"
         android:inputType="textCapCharacters"
         android:maxLength="1"
+        android:digits="@string/possibleValues"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/txtInput2" />
 
@@ -172,6 +175,7 @@
         android:hint="@string/hints"
         android:inputType="textCapCharacters"
         android:maxLength="1"
+        android:digits="@string/possibleValues"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/txtInput3" />
 

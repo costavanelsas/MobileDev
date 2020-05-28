@@ -27,11 +27,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private val games = arrayListOf<Game>()
     private val gameAdapter = GameAdapter(games)
+    private val savedGames = arrayListOf<Game>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        supportActionBar?.title = "Game backlog"
 
         initViews()
         initViewModel()
@@ -86,52 +88,42 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val gameToDelete = games[position]
+                val game = games[position]
 
-                mainActivityViewModel.deleteGame(gameToDelete)
+                if(direction == ItemTouchHelper.LEFT) {
+                    mainActivityViewModel.deleteGame(game)
+                    Snackbar
+                        .make(viewHolder.itemView, "Successfully deleted game", Snackbar.LENGTH_LONG)
+                        .setAction("UNDO"){
+                            mainActivityViewModel.insertGame(game)
+                        }
+                        .show()
+                }
+
+                gameAdapter.notifyDataSetChanged()
             }
         }
         return ItemTouchHelper(callback)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_delete_icon -> {
-                deleteAllGames()
-                return true
+                savedGames.clear()
+                savedGames.addAll(games)
+                mainActivityViewModel.deleteAllGames()
+                Snackbar.make(rvGames, "Successfully deleted game", Snackbar.LENGTH_LONG)
+                    .setAction("UNDO") {
+                        savedGames.forEach {
+                            mainActivityViewModel.insertGame(it)
+                        }
+                    }
+                    .show()
+                true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    private fun deleteAllGames() {
-
-        val itemsToBeDeleted = games
-        val deleteSnackBar = Snackbar.make(rvGames,
-            "Successfully deleted the backlog!", Snackbar.LENGTH_LONG)
-        deleteSnackBar.setAction("Undo", UndoListener(itemsToBeDeleted, mainActivityViewModel))
-        deleteSnackBar.show()
-
-        mainActivityViewModel.deleteAllGames()
-    }
-//WIP
-//    private fun showUndoSnackbar() {
-//        val deleteSnackBar = Snackbar.make(rvGames,
-//            "Successfully deleted the backlog!", Snackbar.LENGTH_LONG)
-//        deleteSnackBar.setAction("Undo") { undoDelete() }
-//        deleteSnackBar.show()
-//    }
-//
-//    private fun undoDelete() {
-//        games.add(
-//            RecentlyDeletedItemPosition,
-//            RecentlyDeletedItem
-//        )
-//        notifyItemInserted(mRecentlyDeletedItemPosition)
-//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

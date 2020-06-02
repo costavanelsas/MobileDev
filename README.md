@@ -38,4 +38,9 @@ Level 6 - task 2 = PopularMovies
 
 Level 7 - task example = level7taskexample
 
+Level 7 - task 1 = BottomNavigationBar
 
+Level 7 - task 2 = HvaQuest
+
+
+© Costa van Elsas - IVMD2

@@ -31,23 +31,36 @@ class AddActivity : AppCompatActivity() {
         initViews()
     }
 
+    //init view
     private fun initViews() {
         fab.setOnClickListener { onSaveClick() }
     }
 
+    /**
+     * method to validate the fields and check if they are not empty and a correct date
+     */
     private fun validateEmptyFields(): Boolean {
+        val zero = 0
+        val maxDays = 31
+        val maxMonths = 12
+        val minYear = 1900
+        val maxYear = 9999
+
+        //title check
         if (etTitle.text.toString().isBlank()) {
             Toast.makeText(this,"Please fill in a title"
                 , Toast.LENGTH_SHORT).show()
             return false
         }
 
+        //platform check
         if (etPlatform.text.toString().isBlank()) {
             Toast.makeText(this,"Please fill in a platform"
                 , Toast.LENGTH_SHORT).show()
             return false
         }
 
+        //date check
         if (etDay.text.toString().isBlank() || etMonth.text.toString().isBlank() ||
             etYear.text.toString().isBlank()) {
             Toast.makeText(this,"Please fill in a date"
@@ -55,9 +68,30 @@ class AddActivity : AppCompatActivity() {
             return false
         }
 
+        //day check
+        if(etDay.text.toString().toInt() < zero || etDay.text.toString().toInt() > maxDays){
+            etDay.error = "Fill in a valid day"
+            return false
+        }
+
+        //month check
+        if(etMonth.text.toString().toInt() < zero || etMonth.text.toString().toInt() > maxMonths){
+            etMonth.error = "Fill in a valid month"
+            return false
+        }
+
+        //year check
+        if(etYear.text.toString().toInt() < minYear || etYear.text.toString().toInt() > maxYear){
+            etYear.error = "Fill in a valid year"
+            return false
+        }
+
         return true
     }
 
+    /**
+     * method for the onsave button click
+     */
     @SuppressLint("SimpleDateFormat")
     private fun onSaveClick() {
         if (validateEmptyFields()) {
